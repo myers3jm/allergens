@@ -1,9 +1,12 @@
-DROP TABLE IF EXISTS menu;
-CREATE TABLE menu(
-    product_name    varchar(50) PRIMARY KEY,
-    category    varchar(100) NOT NULL,
-    flavor        varchar(50) NOT NULL,
-    ingredients       varchar(50) NOT NULL,
-    allergens   varchar(50) NOT NULL
-);
-INSERT INTO menu (product_name, category, flavor, ingredients, allergens) VALUES ('Butter Pecan Cold Brew with Sweet Cold Foam', 'Cold Brew Coffee', 'Butter Pecan', 'Lots of stuff', 'Milk, Soy');
+ DROP EVENT allergens_purge_menu;
+ CREATE EVENT allergens_purge_menu ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP DO DELETE FROM menu;
+
+-- DROP TABLE IF EXISTS menu;
+-- CREATE TABLE menu(
+--     product_name    VARCHAR(500) PRIMARY KEY,
+--     category        TEXT NOT NULL,
+--     flavor          TEXT,
+--     ingredients     TEXT NOT NULL,
+--     allergens       TEXT NOT NULL,
+--     warning         TEXT
+-- );

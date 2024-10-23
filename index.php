@@ -4,7 +4,10 @@
 		require 'database.php';
 	?>
 </head>
-<h2> Welcome!</h2>
+<h2>Dunkin' Allergen Guide</h2>
+<?php 
+	echo "<p>The latest Dunkin' menu was fetched at $time_fetched on $date_fetched.</p>"
+?>
 
 <body>
 	<form id="query-form" method="POST" action="index.php">
