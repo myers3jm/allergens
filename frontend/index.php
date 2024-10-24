@@ -1,6 +1,6 @@
 <head>
 	<?php
-		require 'theme.php';
+		require 'common.php';
 		require 'database.php';
 	?>
 </head>

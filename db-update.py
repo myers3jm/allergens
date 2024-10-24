@@ -5,6 +5,9 @@ import hashlib
 import subprocess
 import datetime
 
+PDF_FILE_PATH = 'menu.pdf'
+COMMON_PHP_PATH = 'frontend/common.php'
+
 class Product:
     def __init__(self, product_info: dict):
         self.name = product_info['name']
@@ -37,7 +40,7 @@ def extract_product(raw: str) -> dict:
 if __name__ == '__main__':
     # Get the current menu's hash
     calculated_hash = None
-    with open('menu.pdf', 'rb') as menu_file:
+    with open(PDF_FILE_PATH, 'rb') as menu_file:
         data = menu_file.read()
         calculated_hash = hashlib.md5(data).hexdigest()
 
@@ -48,12 +51,12 @@ if __name__ == '__main__':
         # Exit if not different from current menu
         print('No need to update menu. Exiting now')
         exit()
-    with open('menu.pdf', 'wb') as menu_file:
+    with open(PDF_FILE_PATH, 'wb') as menu_file:
         menu_file.write(request.content)
         print('Menu downloaded')
 
     # Update frontend novelty display
-    with open('theme.php', 'w') as file:
+    with open(COMMON_PHP_PATH, 'w') as file:
         file.write(f"""<?php
     $time_fetched = "{datetime.datetime.now().strftime('%I:%M %p').lstrip('0')} US/Eastern";
     $date_fetched = "{datetime.date.today().strftime('%m.%d.%Y')}";
@@ -78,7 +81,7 @@ if __name__ == '__main__':
         print('Failed to connect to database')
 
     # Extract data from menu
-    with open('menu.pdf', 'rb') as menu_file:
+    with open(PDF_FILE_PATH, 'rb') as menu_file:
         # Open PDF
         pdfdoc = PdfReader(menu_file)
         
