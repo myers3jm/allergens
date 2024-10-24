@@ -90,20 +90,26 @@ if __name__ == '__main__':
         
         # Split limited time products and permanent products
         limited = pages.split('PERMANENT PRODUCTS')[0].split('Allergen information is available at www')[0]
-        # permanent = pages.split('PERMANENT PRODUCTS')[1]
+        permanent = pages.split('PERMANENT PRODUCTS')[1]
 
         # Serialize products
         limited_products = list(set([Product(extract_product(x)) for x in limited.split('PRODUCT NAME')]))
-        # permanent_products = list(set([Product(extract_product(x)) for x in permanent.split('PRODUCT NAME')]))
+        permanent_products = list(set([Product(extract_product(x)) for x in permanent.split('PRODUCT NAME') if extract_product(x)['name'] != '']))
 
-    # Write products to database
-    cursor = allergens_db.cursor()
-    for p in limited_products:
-        query = f'INSERT INTO menu (product_name, category, flavor, ingredients, allergens, warning) VALUES ("{p.name}", "{p.category}", "{p.flavor}", "{p.ingredients}", "{p.allergens}", "{p.warning}")'
-        cursor.execute(query)
-    
-    # for p in permanent_products:
-    #     query = f'INSERT INTO menu (product_name, category, flavor, ingredients, allergens, warning) VALUES ("{p.name}", "{p.category}", "{p.flavor}", "{p.ingredients}", "{p.allergens}", "{p.warning}")'
-    #     cursor.execute(query)
+        # Write products to database
+        cursor = allergens_db.cursor()
+        for p in limited_products:
+            query = f'INSERT INTO menu (product_name, category, flavor, ingredients, allergens, warning) VALUES ("{p.name}", "{p.category}", "{p.flavor}", "{p.ingredients}", "{p.allergens}", "{p.warning}")'
+            cursor.execute(query)
         
-    allergens_db.commit()
+        for p in permanent_products:
+            try:
+                query = f'INSERT INTO menu (product_name, category, flavor, ingredients, allergens, warning) VALUES ("{p.name}", "{p.category}", "{p.flavor}", "{p.ingredients}", "{p.allergens}", "{p.warning}")'
+                cursor.execute(query)
+            except:
+                query = f'SELECT product_name FROM menu WHERE LOWER(product_name) LIKE "%{p.name.lower()}%"'
+                cursor.execute(query)
+                for x in cursor:
+                    print(x)
+
+        allergens_db.commit()
