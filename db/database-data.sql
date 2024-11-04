@@ -1,4 +1,4 @@
- DROP EVENT allergens_purge_menu;
+ DROP EVENT IF EXISTS allergens_purge_menu;
  CREATE EVENT allergens_purge_menu ON SCHEDULE EVERY 1 DAY STARTS CURRENT_TIMESTAMP DO DELETE FROM menu;
 
 -- DROP TABLE IF EXISTS menu;
