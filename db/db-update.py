@@ -5,7 +5,7 @@ import hashlib
 import subprocess
 import datetime
 
-PDF_FILE_PATH = 'menu.pdf'
+PDF_FILE_PATH = 'db/menu.pdf'
 COMMON_PHP_PATH = 'frontend/common.php'
 
 class Product:
@@ -44,6 +44,7 @@ if __name__ == '__main__':
         data = menu_file.read()
         calculated_hash = hashlib.md5(data).hexdigest()
 
+    print(calculated_hash)
     # Download the most recent menu
     url = 'https://www.dunkindonuts.com/content/dam/dd/pdf/allergy_ingredient_guide.pdf'
     request = requests.get(url, allow_redirects=True)

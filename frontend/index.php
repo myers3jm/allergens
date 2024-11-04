@@ -10,7 +10,7 @@
 ?>
 
 <body>
-	<p>This web application may not behave as expected from 11:59 PM to 12:01 AM, as that is when it attempts to update itself.</p>
+	<p>This web application may not behave as expected around midnight (US-East), as that is when it attempts to fetch the latest menu.</p>
 	<form id="query-form" method="POST" action="index.php">
 		<input id="query" type="text" name="query" for="query" placeholder="Product name">
 		<br />

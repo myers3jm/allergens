@@ -1,0 +1,18 @@
+version: '3.8'
+
+services:
+  php:
+    build: .
+    container_name: allergens
+    volumes:
+      -./allergens:/var/www/html
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+  
+  db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      - MYSQL_ROOT_PASSWORD=value
